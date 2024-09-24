@@ -1,0 +1,130 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.a4 {
+    width: 210mm;
+    height: 297mm;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    padding-left: 5mm;
+}
+
+.green-bar {
+    width: 8mm;
+    background-color: #007754; /* Couleur modifiée */
+    margin-right: 5mm;
+}
+
+.content {
+    padding-top: 20mm;
+    padding-bottom: 20mm;
+    padding-left: 10mm;
+    padding-right: 10mm;
+    width: calc(100% - 30mm);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 10mm; /* Augmente l'espacement en haut de la page */
+}
+
+.logo img {
+    width: 300px; /* Ajustez la taille de l'image selon vos besoins */
+}
+
+.invoice-info {
+    text-align: right;
+}
+
+.invoice-info p {
+    margin: 0;
+}
+
+h1 {
+    text-align: center;
+    font-size: 32px; /* Augmente la taille de la police */
+    color: #007754; /* Couleur modifiée */
+    margin-bottom: 10px; /* Réduit l'espace en bas */
+}
+
+.contact-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Alignement des éléments sur le haut */
+    margin-bottom: 10mm; /* Ajoute un espace entre les informations de contact et le tableau */
+}
+
+.contact-info p {
+    margin: 0;
+    margin-bottom: 2px; /* Petit espace entre les lignes */
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.highlight {
+    color: #007754; /* Couleur modifiée */
+}
+
+.left-info, .right-info {
+    width: 45%;
+}
+
+.left-info label, .right-info label {
+    display: block;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.left-info input, .left-info select, .right-info input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.educo {
+    color: #007754;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.fournisseur-label {
+    color: #007754;
+    text-decoration: underline;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black; /* Lignes du tableau en noir */
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #007754; /* Change la couleur de fond */
+    color: #fff; /* Change la couleur du texte */
+}

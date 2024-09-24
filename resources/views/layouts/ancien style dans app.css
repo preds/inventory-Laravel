@@ -1,0 +1,112 @@
+
+    /* 
+    /* styles des tableau  */
+        .style-en-tete,.table-header ,.filter-tile {
+            /* color: rgb(11, 12, 17); */
+            /* color: rgb(255, 3, 184); */
+            /* color: rgb(7, 177, 35); */
+            color: rgb(3, 197, 165);
+            
+              }
+    
+    
+        .table-header th {
+        text-align: center;
+        
+    }
+        .filter-tile {
+            color: rgb(0, 0, 0);
+            
+        }
+    
+        .fixed-header-scroll {
+        max-height: 400px; /* Ajustez la hauteur maximale selon vos besoins */
+        overflow-y: auto;
+        /* background-color: rgba(11, 12, 17, 0.014); */
+        background-color: rgba(11, 12, 17, 0.075);
+    }
+    
+    .fixed-header-scroll table {
+        margin-bottom: 0; /* Empêche les sauts de ligne */
+    }
+    
+    .fixed-header-scroll thead th {
+        position: sticky;
+        top: 0;
+        background-color: #fff; /* Couleur de fond de l'en-tête */
+        z-index: 1; /* Assure que l'en-tête reste au-dessus du contenu */
+    }
+    .fixed-header-scroll tbody tr:nth-child(even) {
+        background-color: #f9f9f9; /* Couleur de fond pour les lignes impaires */
+    }
+    
+    .fixed-header-scroll tbody tr:hover {
+        background-color: #f1f1f1; /* Couleur de fond au survol des lignes */
+    }
+    .table-header th {
+    text-align: center;
+    }
+    .mb-3{
+        
+        color: rgb(11, 12, 17);
+       
+    }
+    
+    
+    /* styles du tableau de la page assetManagement */
+    .fixed-header-scrolls table {
+        margin-bottom: 0; /* Empêche les sauts de ligne */
+        border-collapse: collapse; /* Fusionne les bordures des cellules */
+    }
+    
+    .fixed-header-scrolls th,
+    .fixed-header-scrolls td {
+        padding: 12px; /* Ajoute de l'espace à l'intérieur des cellules */
+    }
+    
+    .fixed-header-scrolls thead th {
+        position: sticky;
+        top: 0;
+        background-color: #fff; /* Couleur de fond de l'en-tête */
+        z-index: 1; /* Assure que l'en-tête reste au-dessus du contenu */
+        font-size: 14px; /* Ajuste la taille de la police de l'en-tête */
+    }
+    
+    .fixed-header-scrolls tbody td {
+        font-size: 13px; /* Ajuste la taille de la police des cellules */
+    }
+    
+    .fixed-header-scrolls tbody tr:nth-child(even) {
+        background-color: #f9f9f9; /* Couleur de fond pour les lignes impaires */
+    }
+    
+    .fixed-header-scrolls tbody tr:hover {
+        background-color: #f1f1f1; /* Couleur de fond au survol des lignes */
+    }
+    .contenu_tableau{
+        color: rgb(0, 0, 0);
+        font-weight: 600;
+        
+        font-size: 12px;
+    }
+    
+    /* les lignes du tableau */
+    .style-en-tete th {
+            text-align: center;
+        }
+        .table {
+            border-collapse: collapse;
+        }
+       
+        .table td {
+            border: 1px solid #dee2e6;
+        }
+        .table thead th {
+            vertical-align: middle;
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            margin: 0 auto;
+        }
+     
