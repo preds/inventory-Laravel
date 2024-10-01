@@ -62,22 +62,23 @@
 
                         <div class="row">
                             {{-- Designation --}}
-                            <div class="col">
-                                <div class="mb-3">
-                                    <label class="form-label" for="designation"><strong>Désignation</strong></label>
-                                    <select class="form-control @error('designation') is-invalid @enderror" id="designation" name="designation">
-                                        <option value="">-- Sélectionner une désignation --</option>
-                                        @foreach($designations as $designation)
-                                        <option value="{{ $designation->id }}" data-abbreviation="{{ $designation->abbreviation_code }}">{{ $designation->designation_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('designation')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="form-label" for="designation"><strong>Désignation</strong></label>
+                                <select class="form-control @error('designation') is-invalid @enderror" id="designation" name="designation" onchange="updateCodification()">
+                                    <option value="">-- Sélectionner une désignation --</option>
+                                    @foreach($designations as $designation)
+                                    <option value="{{ $designation->id }}" data-abbreviation="{{ $designation->abbreviation_code }}">
+                                        {{ $designation->designation_name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('designation')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
-
-
+                        </div>
+                            
                             {{-- marque --}}
                             <div class="col">
                                 <div class="mb-3">
@@ -331,6 +332,49 @@
 </div>
 </div>
 
+<style>
+    .select2-container--bootstrap-5 .select2-dropdown {
+    max-height: 400px; /* Ajustez cette valeur si nécessaire */
+    overflow-y:scroll;
+}
+
+    /* Assurez que le conteneur Select2 utilise la hauteur correcte */
+    .select2-container--bootstrap-5 .select2-selection {
+        height: calc(2.25rem + 2px);
+        border: 1px solid #ced4da;
+        border-radius: .375rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .select2-container--bootstrap-5 .select2-selection__rendered {
+        line-height: 1.5rem;
+        padding-left: .375rem;
+        color: #495057;
+    }
+
+    .select2-container--bootstrap-5 .select2-selection__arrow {
+        height: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0.75rem;
+    }
+
+    .form-control {
+        width: 100%;
+        box-sizing: border-box;
+    }
+</style>
+<script>
+    $(document).ready(function() {
+        $('#designation').select2({
+            theme: 'bootstrap-5', // Utiliser le thème Bootstrap 5 pour Select2
+            placeholder: "-- Sélectionner une désignation --",
+            allowClear: true,
+            width: 'resolve' // Corrige les problèmes de largeur de Select2
+        });
+    });
+</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -339,43 +383,44 @@
         const projetField = document.getElementById('projet');
         const bailleurField = document.getElementById('bailleur');
         const designationField = document.getElementById('designation');
+        const dateReceptionField = document.getElementById('date_reception');
         const codificationField = document.getElementById('codification');
-
+    
         const localisationMapping = {
-            'Ouagadougou': 'OUA'
-            , 'Ouahigouya': 'OHG'
-            , 'Kaya': 'KYA'
-            , 'Koudougou': 'KDG'
+            'Ouagadougou': 'OUA',
+            'Ouahigouya': 'OHG',
+            'Kaya': 'KYA',
+            'Koudougou': 'KDG'
         };
-
+    
         function generateCodification(sequenceNumber) {
             // Récupération des valeurs des champs
             const localisation = localisationMapping[localisationField.value.trim()] || localisationField.value.trim();
             const projet = projetField.value.trim();
             const bailleur = bailleurField.value.trim();
             const designation = designationField.options[designationField.selectedIndex].getAttribute('data-abbreviation') || designationField.value.trim();
-
-            // Format de la date YYYY-MM-DD
-            const dateActuel = new Date().toISOString().slice(0, 10);
-
+    
+            // Format de la date en AAAA-MM-JJ
+            const dateActuel = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    
             // Création d'un tableau des valeurs non vides
             const parts = [
-                'BF'
-                , localisation
-                , projet
-                , bailleur
-                , designation
-                , dateActuel
-                , sequenceNumber.toString().padStart(3, '0')
+                'BF',
+                localisation,
+                projet,
+                bailleur,
+                designation,
+                dateActuel,
+                sequenceNumber.toString().padStart(3, '0')
             ].filter(part => part !== '');
-
+    
             // Joindre les parties avec un seul slash
             const codification = parts.join('/');
-
+    
             // Mise à jour du champ codification
             codificationField.value = codification;
         }
-
+    
         // Fonction pour récupérer le dernier numéro de séquence depuis le serveur
         async function fetchLatestSequenceNumber() {
             try {
@@ -387,27 +432,26 @@
                 return 1; // Valeur par défaut en cas d'erreur
             }
         }
-
+    
         async function updateCodification() {
             const sequenceNumber = await fetchLatestSequenceNumber();
             generateCodification(sequenceNumber);
         }
-
+    
         // Écouteurs d'événements pour mettre à jour la codification à chaque changement de champ
         localisationField.addEventListener('input', updateCodification);
         projetField.addEventListener('input', updateCodification);
         bailleurField.addEventListener('input', updateCodification);
-        designationField.addEventListener('input', updateCodification);
-
+        designationField.addEventListener('change', updateCodification);
+        dateReceptionField.addEventListener('input', updateCodification);
+    
         // Initialisation de la codification au chargement de la page
         updateCodification();
     });
-
-</script>
-
+    </script>
+    
 
 @endsection
-
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
@@ -423,8 +467,6 @@
 <script src="assets/js/Dynamic-Table-dynamic-table.js"></script>
 <script src="assets/js/Table-With-Search-search-table.js"></script>
 <script src="assets/js/theme.js"></script>
-
-
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -433,31 +475,3 @@
 
 </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const localisationField = document.getElementById('localisation');
-        const projetField = document.getElementById('projet');
-        const bailleurField = document.getElementById('bailleur');
-        const designationField = document.getElementById('designation');
-        const dateReceptionField = document.getElementById('date_reception');
-        const codificationField = document.getElementById('codification');
-
-        function generateCodification() {
-            const localisation = localisationField.value || '';
-            const projet = projetField.value || '';
-            const bailleur = bailleurField.value || '';
-            const designation = designationField.options[designationField.selectedIndex].dataset.abbreviation || '';
-            const date = new Date(dateReceptionField.value);
-            const formattedDate = date instanceof Date && !isNaN(date) ? `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}` : '';
-            const codification = `BF/${localisation}/${projet}/${bailleur}/${designation}/${formattedDate}/001`;
-            codificationField.value = codification;
-        }
-
-        localisationField.addEventListener('input', generateCodification);
-        projetField.addEventListener('input', generateCodification);
-        bailleurField.addEventListener('input', generateCodification);
-        designationField.addEventListener('change', generateCodification);
-        dateReceptionField.addEventListener('input', generateCodification);
-    });
-
-</script>
