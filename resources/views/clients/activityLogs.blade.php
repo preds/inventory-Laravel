@@ -202,6 +202,7 @@ $(document).ready(function() {
                 // Remplir le tableau avec les données filtrées
                 data.forEach(function(log) {
                     var row = '<tr>' +
+                        '<td><input type="checkbox" class="log-checkbox" value="{{ $log->id }}"></td>' +
                         '<td>' + log.id + '</td>' +
                         '<td>' + log.action + '</td>' +
                         '<td>' + log.asset.designation + '</td>' +
