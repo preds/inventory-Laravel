@@ -10,12 +10,37 @@ class DesignationController extends Controller
 {
 
 
+    // public function showAddDesignationPage(Request $request) {
+    //     $perPage = $request->get('perPage', 10); // Nombre d'items par page, par défaut 10
+    //     $designations = Designation::paginate($perPage);
+    //
+    // }
+
     public function showAddDesignationPage(Request $request) {
         $perPage = $request->get('perPage', 10); // Nombre d'items par page, par défaut 10
-        $designations = Designation::paginate($perPage);
+        $search = $request->get('search');
+        $searchField = $request->get('search_field', 'all'); // Search field: all, designation, description, or code
+
+        $query = Designation::query();
+
+        // Apply search conditions
+        if ($search) {
+            if ($searchField === 'all') {
+                $query->where('designation_name', 'like', '%' . $search . '%')
+                      ->orWhere('description', 'like', '%' . $search . '%')
+                      ->orWhere('abbreviation_code', 'like', '%' . $search . '%');
+            } else {
+                $query->where($searchField, 'like', '%' . $search . '%');
+            }
+        }
+
+        // Paginate the results
+        $designations = $query->paginate($perPage);
+
         return view('administration.addNewDesignation', compact('designations'));
     }
-    
+
+
     public function getDesignationById($id)
     {
         // Recherchez la désignation par ID
@@ -88,5 +113,5 @@ class DesignationController extends Controller
     return redirect()->back()->with('error', 'Aucun ID fourni.');
 }
 
-    
+
 }

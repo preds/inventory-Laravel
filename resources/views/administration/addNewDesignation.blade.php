@@ -82,7 +82,33 @@
             <div class="card shadow">
                 <div class="card-header py-2">
                     <p class="lead text-info m-0"><strong><span style="color: rgb(36, 117, 191);">&nbsp;</span><span style="color: rgb(18, 83, 142);">TOUTES LES DÉSIGNATIONS</span></strong></p>
+                
+                    <div class="d-flex justify-content-between">
+                        <div></div> <!-- This empty div is used to ensure the form is aligned right -->
+                        
+                        <form action="/search-designations" method="GET" class="d-flex ms-auto" style="gap: 10px; align-items: center;">
+                            <input type="text" id="searchInput" name="search" placeholder="Search..." value="{{ request('search') }}" style="padding: 8px; border: 1px solid #ced4da; border-radius: 4px; width: 200px;">
+                
+                            <select name="search_field" style="padding: 8px; border: 1px solid #ced4da; border-radius: 4px;">
+                                <option value="all" {{ request('search_field') === 'all' ? 'selected' : '' }}>All Fields</option>
+                                <option value="designation" {{ request('search_field') === 'designation' ? 'selected' : '' }}>Designation</option>
+                                <option value="description" {{ request('search_field') === 'description' ? 'selected' : '' }}>Description</option>
+                                <option value="code" {{ request('search_field') === 'code' ? 'selected' : '' }}>Code</option>
+                            </select>
+                
+                            <button type="submit" style="padding: 8px 12px; border: none; border-radius: 4px; background-color: #007bff; color: white; cursor: pointer;">Search</button>
+                
+                            <select name="perPage" onchange="this.form.submit()" style="padding: 8px; border: 1px solid #ced4da; border-radius: 4px;">
+                                <option value="5" {{ request('perPage') == '5' ? 'selected' : '' }}>5 per page</option>
+                                <option value="10" {{ request('perPage') == '10' ? 'selected' : '' }}>10 per page</option>
+                                <option value="15" {{ request('perPage') == '15' ? 'selected' : '' }}>15 per page</option>
+                                <option value="20" {{ request('perPage') == '20' ? 'selected' : '' }}>20 per page</option>
+                            </select>
+                        </form>
+                    </div>
                 </div>
+                
+            
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-sm my-0 mydatatable">

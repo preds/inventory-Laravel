@@ -9,19 +9,19 @@ composer create-project laravel_inventory_auth
 #3 Dans le repertoire D:\Projet educo\inventory Laravel\resources\views\layouts je creer un fichier  app.blade.php qui contiendra les partie commune de mon code a savoir les nav bar et le footer
 
 #4 <h1>en cas de proble de controlleur qui nest pas reconnu</h1>
-il faut se rendre dans le fichier  <!-- \app\Providers\RouteServiceProvider.php  --> et ajouter la ligne  protected $namespace = 'App\Http\Controllers'; juste avant la fonction 
+il faut se rendre dans le fichier  <!-- \app\Providers\RouteServiceProvider.php  --> et ajouter la ligne  protected $namespace = 'App\Http\Controllers'; juste avant la fonction
 <!-- public function boot() -->
 
 #5 Gestion de Controller
---commande de creation de Controller : <!-- php artisan make:controller ClientsController -->
+--commande de creation de Controller : <!-- php artisan make:controller ClientsController -->   php artisan make:controller ContratController
 --commande de suppression de Controller : <!-- rm app/Http/Controllers/ClientsController.php -->
 
-#6 dans le fichier du controller situé a <!-- app\Http\Controllers\ClientsController.php --> on definie des fonctions de redirection de page 
-exemple    <!-- 
+#6 dans le fichier du controller situé a <!-- app\Http\Controllers\ClientsController.php --> on definie des fonctions de redirection de page
+exemple    <!--
 public function home () {
     return view('clients.home');
 } -->
-et dans le fichier web.php situe dans le repertoire routes on defini la rediretion par : 
+et dans le fichier web.php situe dans le repertoire routes on defini la rediretion par :
 <!-- Route::get('/', 'ClientsController@home')->name('clients.home');  -->
 
 #7 Gestion des modeles :

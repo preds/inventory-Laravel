@@ -37,7 +37,7 @@ Route::get('/api/latest-sequence-number', [AssetsController::class, 'getLatestSe
 // Dans votre routes/web.php
 Route::get('/search-assets', [AssetsController::class, 'showAssetManagementPage']);
 
-
+Route::get('/search-designations', [DesignationController::class, 'showAddDesignationPage']);
 
 // {-----------------------------------------------------------------------------------------}
 // {-----------------------------------------------------------------------------------------}
