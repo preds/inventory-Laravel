@@ -16,7 +16,7 @@
         {{ session('error') }}
     </div>
 @endif
-{{-- test --}}
+
 <div class="container-fluid">
     <h3 class="text-dark mb-4"><span style="color: rgb(9, 179, 94);">Désignations</span></h3>
     <div class="row mb-3">
@@ -87,22 +87,22 @@
                         <div></div> <!-- This empty div is used to ensure the form is aligned right -->
                         
                         <form action="/search-designations" method="GET" class="d-flex ms-auto" style="gap: 10px; align-items: center;">
-                            <input type="text" id="searchInput" name="search" placeholder="Search..." value="{{ request('search') }}" style="padding: 8px; border: 1px solid #ced4da; border-radius: 4px; width: 200px;">
+                            <input type="text" id="searchInput" name="search" placeholder="Rechercher..." value="{{ request('search') }}" style="padding: 8px; border: 1px solid #ced4da; border-radius: 4px; width: 200px;">
                 
                             <select name="search_field" style="padding: 8px; border: 1px solid #ced4da; border-radius: 4px;">
-                                <option value="all" {{ request('search_field') === 'all' ? 'selected' : '' }}>All Fields</option>
+                                <option value="all" {{ request('search_field') === 'all' ? 'selected' : '' }}>Tous les champs</option>
                                 <option value="designation" {{ request('search_field') === 'designation' ? 'selected' : '' }}>Designation</option>
                                 <option value="description" {{ request('search_field') === 'description' ? 'selected' : '' }}>Description</option>
                                 <option value="code" {{ request('search_field') === 'code' ? 'selected' : '' }}>Code</option>
                             </select>
                 
-                            <button type="submit" style="padding: 8px 12px; border: none; border-radius: 4px; background-color: #007bff; color: white; cursor: pointer;">Search</button>
+                            <button type="submit" style="padding: 8px 12px; border: none; border-radius: 4px; background-color: #007bff; color: white; cursor: pointer;">Rechercher</button>
                 
                             <select name="perPage" onchange="this.form.submit()" style="padding: 8px; border: 1px solid #ced4da; border-radius: 4px;">
-                                <option value="5" {{ request('perPage') == '5' ? 'selected' : '' }}>5 per page</option>
-                                <option value="10" {{ request('perPage') == '10' ? 'selected' : '' }}>10 per page</option>
-                                <option value="15" {{ request('perPage') == '15' ? 'selected' : '' }}>15 per page</option>
-                                <option value="20" {{ request('perPage') == '20' ? 'selected' : '' }}>20 per page</option>
+                                <option value="5" {{ request('perPage') == '5' ? 'selected' : '' }}>5 par page</option>
+                                <option value="10" {{ request('perPage') == '10' ? 'selected' : '' }}>10 par page</option>
+                                <option value="15" {{ request('perPage') == '15' ? 'selected' : '' }}>15 par page</option>
+                                <option value="20" {{ request('perPage') == '20' ? 'selected' : '' }}>20 par page</option>
                             </select>
                         </form>
                     </div>

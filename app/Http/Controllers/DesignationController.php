@@ -57,7 +57,7 @@ class DesignationController extends Controller
         // Validation des données
         $request->validate([
             'designation_name' => 'required|string|max:255|unique:designations,designation_name',
-            'description' => 'nullable|string|max:255:designations,description',
+            'description' => 'nullable|string|max:255',
             'abbreviation_code' => 'required|string|max:255|unique:designations,abbreviation_code',
         ]);
 

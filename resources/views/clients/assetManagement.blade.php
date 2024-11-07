@@ -35,10 +35,10 @@
 
                                     <form action="/search-assets" method="GET" style="display: flex; gap: 10px; align-items: center;">
                                    {{-- <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}" style="padding: 8px; border: 1px solid #ced4da; border-radius: 4px; width: 200px;"> --}}
-                                        <input type="text" id="searchInput" name="search" placeholder="Search..." value="{{ request('search') }}" style="padding: 8px; border: 1px solid #ced4da; border-radius: 4px; width: 200px;">
+                                        <input type="text" id="searchInput" name="search" placeholder="Recherche..." value="{{ request('search') }}" style="padding: 8px; border: 1px solid #ced4da; border-radius: 4px; width: 200px;">
 
                                         <select name="search_field" style="padding: 8px; border: 1px solid #ced4da; border-radius: 4px;">
-                                            <option value="all" {{ request('search_field') === 'all' ? 'selected' : '' }}>All Fields</option>
+                                            <option value="all" {{ request('search_field') === 'all' ? 'selected' : '' }}>Tous les champs</option>
                                             <option value="designation" {{ request('search_field') === 'designation' ? 'selected' : '' }}>Designation</option>
                                             <option value="marque" {{ request('search_field') === 'marque' ? 'selected' : '' }}>Marque</option>
                                             <option value="responsable" {{ request('search_field') === 'responsable' ? 'selected' : '' }}>Responsable</option>
@@ -48,12 +48,12 @@
                                             <option value="numero_serie_ou_chassis" {{ request('search_field') === 'numero_serie_ou_chassis' ? 'selected' : '' }}>Numéro de série ou Châssis</option>
                                             <!-- Add more fields as needed -->
                                         </select>
-                                        <button type="submit" style="padding: 8px 12px; border: none; border-radius: 4px; background-color: #007bff; color: white; cursor: pointer;">Search</button>
+                                        <button type="submit" style="padding: 8px 12px; border: none; border-radius: 4px; background-color: #007bff; color: white; cursor: pointer;">Recherche</button>
                                         <select name="perPage" onchange="this.form.submit()" style="padding: 8px; border: 1px solid #ced4da; border-radius: 4px;">
-                                            <option value="5" {{ request('perPage') == '5' ? 'selected' : '' }}>5 per page</option>
-                                            <option value="10" {{ request('perPage') == '10' ? 'selected' : '' }}>10 per page</option>
-                                            <option value="15" {{ request('perPage') == '15' ? 'selected' : '' }}>15 per page</option>
-                                            <option value="20" {{ request('perPage') == '20' ? 'selected' : '' }}>20 per page</option>
+                                            <option value="5" {{ request('perPage') == '5' ? 'selected' : '' }}>5 par page</option>
+                                            <option value="10" {{ request('perPage') == '10' ? 'selected' : '' }}>10 par page</option>
+                                            <option value="15" {{ request('perPage') == '15' ? 'selected' : '' }}>15 par page</option>
+                                            <option value="20" {{ request('perPage') == '20' ? 'selected' : '' }}>20 par page</option>
                                         </select>
                                     </form>
 
@@ -196,19 +196,13 @@
                                     </nav>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-center mt-3">
-                                <label for="perPage">Articles par page:</label>
-                                <select id="perPage" class="form-select w-auto ml-2" onchange="changePerPage(this)">
-                                    <option value="5" {{ request('perPage') == 5 ? 'selected' : '' }}>5</option>
-                                    <option value="10" {{ request('perPage') == 10 ? 'selected' : '' }}>10</option>
-                                    <option value="15" {{ request('perPage') == 15 ? 'selected' : '' }}>15</option>
-                                </select>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </section>
     @endsection
     <style>

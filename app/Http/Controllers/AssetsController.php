@@ -5,6 +5,8 @@ use App\Models\Asset;
 use App\Models\AssetLog;
 use App\Models\Category;
 use App\Models\Media;
+use App\Models\Bailleur;
+use App\Models\Projet;
 use App\Models\Designation;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -48,9 +50,11 @@ class AssetsController extends Controller
         $medias = Media::where('deleted', false)->get();
          // Récupérer toutes les désignations
         $designations = Designation::all();
+        $bailleurs = Bailleur::all();
+        $projets = Projet::all();
 
         // Retourner la vue avec les données nécessaires
-        return view('clients.addAssetManagement', compact('lastAssets', 'categories', 'medias', 'designations'));
+        return view('clients.addAssetManagement', compact('lastAssets', 'categories', 'medias', 'designations','bailleurs','projets'));
     }
 
     public function addNewAssetInDb(Request $request)
@@ -149,62 +153,16 @@ class AssetsController extends Controller
     }
 
     public function getLatestSequenceNumber() {
-        // Récupération du dernier enregistrement trié par ID décroissant
-        $latestAsset = Asset::orderBy('id', 'desc')->first();
-        $latestSequenceNumber = 0;
-
-        if ($latestAsset) {
-            // Extraction du numéro de séquence de la dernière codification
-            $codificationParts = explode('/', $latestAsset->codification);
-            // Le numéro de séquence est la dernière partie de la codification
-            $latestSequenceNumber = (int)end($codificationParts);
-        }
-
-        // Renvoi du prochain numéro de séquence
-        return response()->json(['sequenceNumber' => $latestSequenceNumber + 1]);
+        $lastAsset = Asset::orderBy('id', 'desc')->first();
+    
+        // Extraire le dernier numéro de séquence
+        $lastSequenceNumber = $lastAsset ? (int) substr($lastAsset->codification, -3) : 0;
+    
+        return response()->json([
+            'sequenceNumber' => $lastSequenceNumber
+        ]);
     }
 
-
-//     public function showAssetManagementPage(Request $request)
-// {
-//     // Nombre d'éléments par page par défaut
-//     $perPage = $request->input('perPage', 5);
-
-//     // Récupérer l'utilisateur connecté et son niveau d'accès
-//     $user = auth()->user();
-//     $groupName = $user->group->level; // Récupérer le nom du groupe de l'utilisateur
-
-//     // Construire la requête avec les conditions de filtrage
-//     $query = Asset::where('deleted', false)->with('category.media');
-
-//     // Appliquer les filtres s'ils sont présents
-//     $filters = [
-//         'category' => $request->input('category'),
-//         'location' => $request->input('location'),
-//         'etat' => $request->input('etat'),
-//     ];
-
-//     foreach ($filters as $key => $value) {
-//         if ($value && $request->has($key)) {
-//             $query->where($key, $value);
-//         }
-//     }
-
-//     // Récupérer les assets paginés
-//     $assets = $query->paginate($perPage);
-
-//     // Récupérer les catégories avec leurs médias associés
-//     $categories = Category::with('media')->get();
-
-//     // Récupérer les localisations distinctes
-//     $locations = Asset::distinct()->pluck('localisation');
-
-//     // Récupérer les états distincts
-//     $etats = Asset::distinct()->pluck('etat');
-
-//     // Retourner la vue avec les assets, catégories, localisations et états, et le niveau d'accès de l'utilisateur
-//     return view('clients.assetManagement', compact('assets', 'categories', 'locations', 'etats', 'groupName', 'user'));
-// }
 public function showAssetManagementPage(Request $request)
 {
     // Nombre d'éléments par page par défaut
@@ -405,58 +363,142 @@ public function restoreAsset(Request $request)
 
 
     public function showUpdateExistingAssetsPage(Request $request)
-{
-    // Récupérer l'ID de l'actif depuis la requête
-    $assetId = $request->input('id');
-
-    // Récupérer tous les actifs avec leurs catégories et médias associés
-    $assets = Asset::with(['category', 'category.media'])->get();
-
-    // Récupérer l'actif spécifique en fonction de l'identifiant
-    $asset = Asset::find($assetId);
-
-    // Vérifier si l'actif existe
-    if (!$asset) {
-        // Rediriger vers une page d'erreur ou renvoyer une réponse avec un message d'erreur
-        return redirect()->route('clients.home')->with('error', 'Actif non trouvé.');
+    {
+        // Récupérer l'ID de l'actif depuis la requête
+        $assetId = $request->input('id');
+    
+        // Récupérer tous les actifs avec leurs catégories et médias associés
+        $assets = Asset::with(['category', 'category.media'])->get();
+    
+        // Récupérer l'actif spécifique en fonction de l'identifiant
+        $asset = Asset::find($assetId);
+    
+        // Vérifier si l'actif existe
+        if (!$asset) {
+            return redirect()->route('assets.showAssetManagementPage')->with('error', 'Actif non trouvé.');
+        }
+    
+        // Initialisation des autres variables nécessaires
+        $categoriesInDb = Category::all();
+        $medias = Media::where('deleted', false)->get();
+        $designations = Designation::all();
+        $bailleurs = Bailleur::all();
+        $projets = Projet::all();
+    
+        // Assignation des variables spécifiques pour la vue
+        $currentBailleurId = $asset->bailleur;
+        $currentProjetId = $asset->projet;
+        $currentDesignationId = $asset->designation;
+     
+    
+        return view('clients.UpdateExistingAssets', compact(
+            'asset', 
+            'assets', 
+            'categoriesInDb', 
+            'medias',
+            'designations',
+            'bailleurs',
+            'projets',
+            'currentBailleurId', 
+            'currentProjetId',
+            'currentDesignationId'
+        ));
     }
+    
 
-    // Récupérer toutes les catégories existantes
-    $categoriesInDb = Category::all();
+// public function updateAsset(Request $request, $id)
+// {
+//     $asset = Asset::findOrFail($id);
 
-    // Récupérer tous les médias (images)
-    $medias = Media::where('deleted', false)->get();
-    // Récupérer toutes les désignations disponibles
-    $designations = Designation::all();
+//     // Récupérer les données originales avant mise à jour
+//     $originalData = $asset->toArray();
 
-    // Passer les données de l'actif et d'autres éléments à la vue de la page de modification
-    return view('clients.UpdateExistingAssets', compact('asset', 'assets', 'categoriesInDb', 'medias','designations'));
+//     // Mettre à jour les champs de l'actif
+//     $asset->update($request->all());
 
-}
+//     // Enregistrer l'activité
+//     AssetLog::create([
+//         'user_id' => Auth::id(),
+//         'asset_id' => $asset->id,
+//         'action' => 'update',
+//         'description' => 'Asset updated',
 
+//     ]);
+
+//     // Rediriger avec un message de succès
+//     return redirect()->route('assets.showUpdateExistingAssetsPage', ['id' => $id])->with('success', 'Asset updated successfully');
+// }
 
 public function updateAsset(Request $request, $id)
 {
+
+    // Récupérer l'actif à mettre à jour
     $asset = Asset::findOrFail($id);
+
+    // Validation des données envoyées par la requête
+    $validatedData = $request->validate([
+        'category' => 'required|exists:categories,id',
+        'localisation' => 'required|string|max:255',
+        'designation' => 'required|exists:designations,id',
+        'marque' => 'nullable|string|max:255',
+        'modele' => 'nullable|string|max:255',
+        'numero_serie_ou_chassis' => 'nullable|string|max:255',
+        'etat' => 'required|string|in:Neuf,Bon,Passable,À Réparer,À Déclasser,Hors Service Bon,Hors Service',
+        'situation_exacte_du_materiel' => 'nullable|string|max:255',
+        'responsable' => 'nullable|string|max:255',
+        'quantite' => 'required|integer|min:1',
+        'date_achat' => 'nullable|date',
+        'valeur' => 'nullable|numeric|min:0',
+        'numero_piece_comptables' => 'nullable|string|max:255',
+        'fournisseur' => 'nullable|string|max:255',
+        'bailleur' => 'nullable|string|max:255',
+        'projet' => 'nullable|string|max:255',
+        'date_de_sortie' => 'nullable|date',
+        'codification' => 'nullable|string|max:255',
+    ]);
 
     // Récupérer les données originales avant mise à jour
     $originalData = $asset->toArray();
 
     // Mettre à jour les champs de l'actif
-    $asset->update($request->all());
+    $asset->update([
+        'category_id' => $request->category,
+        'localisation' => $request->localisation,
+        'designation' => $request->designation, // Mise à jour avec l'ID de la designation
+        'marque' => $request->marque,
+        'modele' => $request->modele,
+        'numero_serie_ou_chassis' => $request->numero_serie_ou_chassis,
+        'etat' => $request->etat,
+        'situation_exacte_du_materiel' => $request->situation_exacte_du_materiel,
+        'responsable' => $request->responsable,
+        'quantite' => $request->quantite,
+        'date_achat' => $request->date_achat,
+        'valeur' => $request->valeur,
+        'numero_piece_comptables' => $request->numero_piece_comptables,
+        'fournisseur' => $request->fournisseur,
+        'bailleur' => $request->bailleur, // Mise à jour avec l'ID du bailleur
+        'projet' => $request->projet, // Mise à jour avec l'ID du projet
+        'date_de_sortie' => $request->date_de_sortie,
+        'codification' => $request->codification,
+    ]);
 
-    // Enregistrer l'activité
+    // Enregistrer l'activité dans le journal des actions (AssetLog)
     AssetLog::create([
         'user_id' => Auth::id(),
         'asset_id' => $asset->id,
         'action' => 'update',
         'description' => 'Asset updated',
-
+        'original_data' => json_encode($originalData),
+        'updated_data' => json_encode($request->all())
     ]);
 
     // Rediriger avec un message de succès
-    return redirect()->route('assets.showUpdateExistingAssetsPage', ['id' => $id])->with('success', 'Asset updated successfully');
+    return redirect()->route('assets.showUpdateExistingAssetsPage', ['id' => $id])
+                     ->with('success', 'Asset updated successfully');
 }
+
+
+
 
 public function deleteAsset(Request $request)
 {

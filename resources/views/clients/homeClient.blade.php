@@ -27,7 +27,7 @@
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="navbar-nav ms-auto">
-        
+
                         <li class="nav-item">
                             <a class="nav-link" style="color: #ffffff;" href="{{ route('clients.showHomePage') }}">
                                 <div class="d-flex align-items-center">
@@ -36,7 +36,7 @@
                                 </div>
                             </a>
                         </li>
-        
+
                         <li class="nav-item">
                             <a class="nav-link" style="color: #ffffff;" href="{{ route('assets.showAssetManagementPage') }}">
                                 <div class="d-flex align-items-center">
@@ -68,14 +68,16 @@
                 </div>
             </div>
         </nav>
-        
-        
-        
-        
+
+
+
+
     </div>
-    <header class="text-center text-white d-flex masthead" style="background: url(&quot;homeClientAssets/img/educo%20font.jpg&quot;) no-repeat;background-size: cover;">
-        <div class="container my-auto">
-            <div class="row">
+    <header class="text-center text-white d-flex masthead" style="background: url('homeClientAssets/img/a.jpg') no-repeat; background-size: cover;">
+
+        <div class="container my-auto" style="background-color: rgba(0, 0, 0, 0.5); padding: 20px;">
+
+        <div class="row">
                 <div class="col-lg-10 mx-auto">
                     <h1 class="text-uppercase"><strong>Educo Burkina&nbsp;</strong></h1>
                     <hr style="--bs-primary: #026433;/*--bs-primary-rgb: 2,100,51;*/background: var(--bs-purple);border-color: rgb(11,166,89);">
@@ -86,7 +88,7 @@
             </div>
         </div>
     </header>
-  
+
     <section id="contact" class="text-white bg-dark">
         <div class="container">
             <div class="row">

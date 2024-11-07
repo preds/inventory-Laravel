@@ -11,7 +11,10 @@ use App\Http\Controllers\{ClientsController,
     MediaController,
     PasswordController,
     TaskLogController,
-    DesignationController};
+    DesignationController,
+    BailleurController,
+    ProjetController
+    };
 
 
 
@@ -38,6 +41,8 @@ Route::get('/api/latest-sequence-number', [AssetsController::class, 'getLatestSe
 Route::get('/search-assets', [AssetsController::class, 'showAssetManagementPage']);
 
 Route::get('/search-designations', [DesignationController::class, 'showAddDesignationPage']);
+Route::get('/search-bailleurs', [BailleurController::class, 'showAddBailleurPage']);
+Route::get('/search-projets', [ProjetController::class, 'showAddProjetPage']);
 
 // {-----------------------------------------------------------------------------------------}
 // {-----------------------------------------------------------------------------------------}
@@ -288,6 +293,38 @@ Route::post('/designations/toggleStatus', [DesignationController::class, 'toggle
 Route::delete('/designations/delete', [DesignationController::class, 'delete'])->name('designations.delete');
 Route::get('/designations/{id}', [DesignationController::class, 'getDesignationById']);
 Route::delete('/designations/delete-multiple', [DesignationController::class, 'deleteMultiple'])->name('designations.delete.bulk');
+
+// {-----------------------------------------------------------------------------------------}
+// {-----------------------------------------------------------------------------------------}
+// {-----------------------------------------------------------------------------------------}
+//Route de la gestion des Bailleur***************************************************************
+// {-----------------------------------------------------------------------------------------}
+// {-----------------------------------------------------------------------------------------}
+// {-----------------------------------------------------------------------------------------}
+    Route::get('/ajouterBailleur', [BailleurController::class, 'showAddBailleurPage'])->name('bailleurs.showAddBailleurPage');
+    Route::post('/bailleurs/add', [BailleurController::class, 'add'])->name('bailleurs.add');
+    Route::post('/bailleurs/import', [BailleurController::class, 'import'])->name('bailleurs.import');
+    Route::post('/bailleurs/toggleStatus', [BailleurController::class, 'toggleStatus'])->name('bailleurs.toggleStatus');
+    Route::delete('/bailleurs/delete', [BailleurController::class, 'delete'])->name('bailleurs.delete');
+    Route::get('/bailleurs/{id}', [bailleurController::class, 'getBailleurById']);
+    Route::delete('/bailleurs/delete-multiple', [BailleurController::class, 'deleteMultiple'])->name('bailleurs.delete.bulk');
+
+// {-----------------------------------------------------------------------------------------}
+// {-----------------------------------------------------------------------------------------}
+// {-----------------------------------------------------------------------------------------}
+//Route de la gestion des Projet***************************************************************
+// {-----------------------------------------------------------------------------------------}
+// {-----------------------------------------------------------------------------------------}
+// {-----------------------------------------------------------------------------------------}
+Route::get('/ajouterProjet', [ProjetController::class, 'showAddProjetPage'])->name('projets.showAddProjetPage');
+Route::post('/projets/add', [ProjetController::class, 'add'])->name('projets.add');
+Route::post('/projets/import', [ProjetController::class, 'import'])->name('projets.import');
+Route::post('/projets/toggleStatus', [ProjetController::class, 'toggleStatus'])->name('projets.toggleStatus');
+Route::delete('/projets/delete', [ProjetController::class, 'delete'])->name('projets.delete');
+Route::get('/projets/{id}', [ProjetController::class, 'getProjetById']);
+Route::delete('/projets/delete-multiple', [ProjetController::class, 'deleteMultiple'])->name('projets.delete.bulk');
+
+
 
 
 // {-----------------------------------------------------------------------------------------}

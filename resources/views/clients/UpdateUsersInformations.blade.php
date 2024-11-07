@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Update User Information
+    Mise à Jours Des Informations Utilisateur
 @endsection
 
 @section('contenu')
@@ -18,7 +18,7 @@
 @endif
 
 <div class="container-fluid">
-    <h3 class="text-dark mb-4"><span style="color: rgb(9, 179, 94);">Update User Information</span></h3>
+    <h3 class="text-dark mb-4"><span style="color: rgb(9, 179, 94);">Mise à Jours Des Informations Utilisateur </span></h3>
 
     {{-- Affichage des messages d'erreur --}}
     @if ($errors->any())
@@ -44,13 +44,13 @@
                     @csrf
                     <div class="mb-3">
                         <input type="file" name="photo" id="photo" style="display: none;" accept="image/*" onchange="previewPhoto(event)">
-                        <label for="photo" class="btn btn-primary btn-sm">Change Photo</label>
+                        <label for="photo" class="btn btn-primary btn-sm">Changer la photo</label>
                     </div>
                     <div class="mb-3">
-                        <button class="btn btn-success btn-sm" type="submit">Save Photo</button>
+                        <button class="btn btn-success btn-sm" type="submit">Sauvegarder la Photo</button>
                     </div>
                 </form>
-                
+
                     @if(session('success'))
                     <div class="alert alert-success mt-3">{{ session('success') }}</div>
                     @endif
@@ -65,7 +65,7 @@
                 <div class="col">
                     <div class="card shadow mb-3">
                         <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">User Settings</p>
+                            <p class="text-primary m-0 fw-bold">Parametres utilisateurs </p>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('users.update', $user->id) }}" method="POST">
@@ -86,12 +86,12 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                    </div> 
-                                </div>   
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3">
-                                            <label class="form-label" for="first_name"><strong>First Name</strong></label>
+                                            <label class="form-label" for="first_name"><strong>Prénom</strong></label>
                                             <input class="form-control @error('first_name') is-invalid @enderror" type="text" id="first_name" placeholder="Enter first name" name="first_name" value="{{ old('first_name', $user->first_name) }}">
                                             @error('first_name')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -100,7 +100,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="mb-3">
-                                            <label class="form-label" for="last_name"><strong>Last Name</strong></label>
+                                            <label class="form-label" for="last_name"><strong>Nom</strong></label>
                                             <input class="form-control @error('last_name') is-invalid @enderror" type="text" id="last_name" placeholder="Enter last name" name="last_name" value="{{ old('last_name', $user->last_name) }}">
                                             @error('last_name')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -111,7 +111,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3">
-                                            <label class="form-label" for="username"><strong>Username</strong></label>
+                                            <label class="form-label" for="username"><strong>Nom d'utilisateur</strong></label>
                                             <input class="form-control @error('username') is-invalid @enderror" type="text" id="username" placeholder="Enter username" name="username" value="{{ old('username', $user->username) }}">
                                             @error('username')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -131,11 +131,11 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <button class="btn btn-primary btn-sm mr-2" type="submit">Update User</button>
-                                    <button class="btn btn-warning btn-sm" type="button" id="reset-password-btn">Reset Password</button>
+                                    <button class="btn btn-primary btn-sm mr-2" type="submit">modifier l'utilisateur</button>
+                                    <button class="btn btn-warning btn-sm" type="button" id="reset-password-btn">Reinitialiser le mot de passe</button>
                                 </div>
                             </form>
                             @if(session('new_password'))
@@ -166,6 +166,7 @@ document.getElementById('reset-password-btn').addEventListener('click', function
         .then(data => {
             if (data.success) {
                 alert('Password reset successfully! The new password is: ' + data.new_password);
+
             } else {
                 alert('Error resetting password: ' + data.message);
             }

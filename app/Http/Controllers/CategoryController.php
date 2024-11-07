@@ -11,15 +11,14 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-
     public function showCategoryManagementPage(Request $request) {
-   
+
         $query = Category::query();
         // Récupérer les variables pour le filtrage du tableau
-   
+
         $categories=Category::All();
         // $categories = Category::where('deleted', false)->get();
-        //recuperer les photos 
+        //recuperer les photos
         $medias = Media::where('deleted', false)->get();
         // Retourner la vue avec les données nécessaires
         return view('clients.categoryManagement', compact('categories','medias'));
@@ -32,40 +31,40 @@ class CategoryController extends Controller
             'categoryName' => 'required|string|max:255',
             'photo_id' => 'required|exists:media,id', // Assurez-vous que l'ID de l'image existe dans la table des médias
         ]);
-    
+
         // Convertir le nom de la catégorie en minuscule pour garantir l'unicité
         $normalizedCategoryName = strtolower($validatedData['categoryName']);
-    
+
         // Vérifier si la catégorie existe déjà (indépendamment de la casse)
         $existingCategory = Category::whereRaw('LOWER(category_name) = ?', [$normalizedCategoryName])->first();
-    
+
         if ($existingCategory) {
             return redirect('/categoryManagement')->with('error', 'Category already exists.')->withInput();
         }
-    
+
         DB::beginTransaction();
-    
+
         try {
             // Création d'une nouvelle instance de modèle Category
             $category = new Category();
             $category->category_name = $normalizedCategoryName;
             $category->photo_id = $validatedData['photo_id']; // Stockez l'ID de l'image
             $category->save();
-    
+
             DB::commit();
-    
+
             return redirect('/categoryManagement')->with('success', 'Category created successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect('/categoryManagement')->with('error', 'Failed to create category. Please try again.')->withInput();
         }
     }
-    
+
 
     public function showUpdateExistingCategoryPage(Request $request)
 {
     // Récupérer l'ID de la catégorie depuis la requête
-    $categoryId = $request->input('id'); 
+    $categoryId = $request->input('id');
 
     // Récupérer la catégorie en fonction de l'identifiant
     $category = Category::find($categoryId);
@@ -120,7 +119,7 @@ public function showdeletedCategoryPage(Request $request) {
     $medias = Media::where('deleted', false)->get();
 
 
-    
+
     return view('clients.deletedCategory', compact('deletedCategories', 'medias'));
 }
 

@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('category_name');
             $table->boolean('active')->default(true);
+            $table->boolean('deleted')->default(true);
             $table->timestamps();
         });
     }

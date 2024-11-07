@@ -29,7 +29,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <p class="text-primary m-0 fw-bold">Logs</p>
                             <div class="d-flex">
-                                <input type="text" id="search-input" class="form-control form-control-sm mr-2" placeholder="Search...">
+                                <input type="text" id="search-input" class="form-control form-control-sm mr-2" placeholder="Recherche...">
                             </div>
                         </div>
                     </div>
@@ -83,15 +83,7 @@
                                 </div>
                             </div>
 
-                            {{-- Sélecteur d'éléments par page --}}
-                            <div class="d-flex justify-content-center mt-3">
-                                <label for="perPage">Items par page:</label>
-                                <select id="perPage" class="form-select w-auto ml-2" onchange="changePerPage(this)">
-                                    <option value="5" {{ request('perPage') == 5 ? 'selected' : '' }}>5</option>
-                                    <option value="10" {{ request('perPage') == 10 ? 'selected' : '' }}>10</option>
-                                    <option value="15" {{ request('perPage') == 15 ? 'selected' : '' }}>15</option>
-                                </select>
-                            </div>
+                            
                         </div>
                     </div>
 

@@ -14,7 +14,33 @@
     {{ session('error') }}
 </div>
 @endif
+<style>
+    /* Assurez-vous que le `select` est suffisamment large et visible */
+    #bailleur {
+        font-size: 14px;
+        padding: 10px;
+        width: 100%;
+        /* Vérifier la largeur du select */
 
+    }
+
+    /* Style d'option sélectionnée */
+    #bailleur option {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    /* Styles pour les erreurs */
+    .is-invalid {
+        border-color: red;
+    }
+
+    .text-danger {
+        font-size: 12px;
+        color: red;
+    }
+
+</style>
 <div class="container-fluid">
     <h3 class="text-dark mb-4"><span style="color: rgb(9, 179, 94);">Ajouter un nouvel actif</span></h3>
     <div class="row mb-3">
@@ -62,23 +88,23 @@
 
                         <div class="row">
                             {{-- Designation --}}
-                        <div class="col">
-                            <div class="mb-3">
-                                <label class="form-label" for="designation"><strong>Désignation</strong></label>
-                                <select class="form-control @error('designation') is-invalid @enderror" id="designation" name="designation" onchange="updateCodification()">
-                                    <option value="">-- Sélectionner une désignation --</option>
-                                    @foreach($designations as $designation)
-                                    <option value="{{ $designation->id }}" data-abbreviation="{{ $designation->abbreviation_code }}">
-                                        {{ $designation->designation_name }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                @error('designation')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label class="form-label" for="designation"><strong>Désignation</strong></label>
+                                    <select class="form-control @error('designation') is-invalid @enderror" id="designation" name="designation" onchange="updateCodification()">
+                                        <option value="">-- Sélectionner une désignation --</option>
+                                        @foreach($designations as $designation)
+                                        <option value="{{ $designation->id }}" data-abbreviation="{{ $designation->abbreviation_code }}">
+                                            {{ $designation->designation_name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @error('designation')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-                            
+
                             {{-- marque --}}
                             <div class="col">
                                 <div class="mb-3">
@@ -124,10 +150,10 @@
                                         <option value="Neuf" {{ old('etat') == 'Neuf' ? 'selected' : '' }}>Neuf - État parfait, jamais utilisé</option>
                                         <option value="Bon" {{ old('etat') == 'Bon' ? 'selected' : '' }}>Bon - État général bon, pleinement fonctionnel</option>
                                         <option value="Passable" {{ old('etat') == 'Passable' ? 'selected' : '' }}>Passable - Fonctionnel mais montre des signes d'usure ou de dégradation</option>
-                                        <option value="À Réparer" {{ old('etat') == 'À Réparer' ? 'selected' : '' }}>À Réparer - Nécessite des réparations pour être pleinement fonctionnel</option>
+                                        {{-- <option value="À Réparer" {{ old('etat') == 'À Réparer' ? 'selected' : '' }}>À Réparer - Nécessite des réparations pour être pleinement fonctionnel</option>
                                         <option value="À Déclasser" {{ old('etat') == 'À Déclasser' ? 'selected' : '' }}>À Déclasser - À retirer du service actif mais peut avoir une certaine valeur pour des pièces ou autres utilisations</option>
                                         <option value="Hors Service Bon" {{ old('etat') == 'Hors Service Bon' ? 'selected' : '' }}>Hors Service Bon - Considéré hors service mais en bon état pour certaines pièces de rechange</option>
-                                        <option value="Hors Service" {{ old('etat') == 'Hors Service' ? 'selected' : '' }}>Hors Service - Totalement inutilisable et à retirer</option>
+                                        <option value="Hors Service" {{ old('etat') == 'Hors Service' ? 'selected' : '' }}>Hors Service - Totalement inutilisable et à retirer</option> --}}
                                     </select>
                                     @error('etat')
                                     <div class="text-danger">{{ $message }}</div>
@@ -218,23 +244,35 @@
                         </div>
 
                         <div class="row">
-                            {{-- bailleur --}}
+                            {{-- Bailleur --}}
                             <div class="col">
                                 <div class="mb-3">
                                     <label class="form-label" for="bailleur"><strong>Bailleur</strong></label>
-                                    <input class="form-control @error('bailleur') is-invalid @enderror" type="text" id="bailleur" name="bailleur" value="{{ old('bailleur') }}">
+                                    <select class="form-control @error('bailleur') is-invalid @enderror" id="bailleur" name="bailleur" onchange="updateCodification()">
+                                        <option value="">-- Sélectionner un Bailleur --</option>
+                                        @foreach($bailleurs as $bailleur)
+                                        <option value="{{ $bailleur->id }}" data-abbreviation="{{ $bailleur->abbreviation_code }}">
+                                            {{ $bailleur->bailleur_name }} <!-- Affichage du nom du bailleur -->
+                                        </option>
+                                        @endforeach
+                                    </select>
                                     @error('bailleur')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
-
                             {{-- projet --}}
-
                             <div class="col">
                                 <div class="mb-3">
                                     <label class="form-label" for="projet"><strong>Projet</strong></label>
-                                    <input class="form-control @error('projet') is-invalid @enderror" type="text" id="projet" name="projet" value="{{ old('projet') }}">
+                                    <select class="form-control @error('projet') is-invalid @enderror" id="projet" name="projet" onchange="updateCodification()">
+                                        <option value="">-- Sélectionner un Projet --</option>
+                                        @foreach($projets as $projet)
+                                        <option value="{{ $projet->id }}" data-abbreviation="{{ $projet->abbreviation_code }}">
+                                            {{ $projet->projet_name }} <!-- Affichage du nom du projet -->
+                                        </option>
+                                        @endforeach
+                                    </select>
                                     @error('projet')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -242,7 +280,9 @@
                             </div>
                         </div>
 
+
                         <div class="row">
+                            {{-- date de sortie --}}
                             <div class="col">
                                 <div class="mb-3">
                                     <label class="form-label" for="date_de_sortie"><strong>Date de sortie</strong></label>
@@ -291,7 +331,7 @@
                                                     <th>Modèle</th>
                                                     <th>Catégorie</th>
                                                     <th>Détenteur</th>
-                                                    <th>Année d'acquisition></th>
+                                                    <th>Année d'acquisition</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -318,7 +358,7 @@
                                 </div>
                             </div>
                             <button class="btn btn-primary pull-right" type="button" onclick="window.location='{{ route('assets.showAssetManagementPage') }}'">
-                                <i class="fa fa-star" style="font-size: 0px;"></i>More
+                                <i class="fa fa-star" style="font-size: 0px;"></i>Voir Plus
                             </button>
                         </div>
                     </div>
@@ -334,9 +374,10 @@
 
 <style>
     .select2-container--bootstrap-5 .select2-dropdown {
-    max-height: 400px; /* Ajustez cette valeur si nécessaire */
-    overflow-y:scroll;
-}
+        max-height: 400px;
+        /* Ajustez cette valeur si nécessaire */
+        overflow-y: scroll;
+    }
 
     /* Assurez que le conteneur Select2 utilise la hauteur correcte */
     .select2-container--bootstrap-5 .select2-selection {
@@ -364,92 +405,126 @@
         width: 100%;
         box-sizing: border-box;
     }
+
 </style>
 <script>
     $(document).ready(function() {
         $('#designation').select2({
             theme: 'bootstrap-5', // Utiliser le thème Bootstrap 5 pour Select2
-            placeholder: "-- Sélectionner une désignation --",
-            allowClear: true,
-            width: 'resolve' // Corrige les problèmes de largeur de Select2
+            placeholder: "-- Sélectionner une désignation --"
+            , allowClear: true
+            , width: 'resolve' // Corrige les problèmes de largeur de Select2
         });
     });
+
 </script>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Sélecteurs pour les champs du formulaire
-        const localisationField = document.getElementById('localisation');
-        const projetField = document.getElementById('projet');
-        const bailleurField = document.getElementById('bailleur');
-        const designationField = document.getElementById('designation');
-        const dateReceptionField = document.getElementById('date_reception');
-        const codificationField = document.getElementById('codification');
-    
-        const localisationMapping = {
-            'Ouagadougou': 'OUA',
-            'Ouahigouya': 'OHG',
-            'Kaya': 'KYA',
-            'Koudougou': 'KDG'
-        };
-    
-        function generateCodification(sequenceNumber) {
-            // Récupération des valeurs des champs
-            const localisation = localisationMapping[localisationField.value.trim()] || localisationField.value.trim();
-            const projet = projetField.value.trim();
-            const bailleur = bailleurField.value.trim();
-            const designation = designationField.options[designationField.selectedIndex].getAttribute('data-abbreviation') || designationField.value.trim();
-    
-            // Format de la date en AAAA-MM-JJ
-            const dateActuel = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-    
-            // Création d'un tableau des valeurs non vides
-            const parts = [
-                'BF',
-                localisation,
-                projet,
-                bailleur,
-                designation,
-                dateActuel,
-                sequenceNumber.toString().padStart(3, '0')
-            ].filter(part => part !== '');
-    
-            // Joindre les parties avec un seul slash
-            const codification = parts.join('/');
-    
-            // Mise à jour du champ codification
-            codificationField.value = codification;
+    // Sélecteurs pour les champs du formulaire
+    const localisationField = document.getElementById('localisation');
+    const projetField = document.getElementById('projet');
+    const bailleurField = document.getElementById('bailleur');
+    const designationField = document.getElementById('designation');
+    const codificationField = document.getElementById('codification');
+
+    const localisationMapping = {
+        'Ouagadougou': 'OUA',
+        'Ouahigouya': 'OHG',
+        'Kaya': 'KYA',
+        'Koudougou': 'KDG'
+    };
+
+    // Fonction pour récupérer le code du bailleur
+    function getBailleurCode() {
+        const bailleurId = bailleurField.value;
+        const selectedBailleur = [...bailleurField.options].find(option => option.value === bailleurId);
+        return selectedBailleur ? selectedBailleur.getAttribute('data-abbreviation') : '';
+    }
+
+    // Fonction pour récupérer le code du projet
+    function getProjetCode() {
+        const projetId = projetField.value;
+        const selectedProjet = [...projetField.options].find(option => option.value === projetId);
+        return selectedProjet ? selectedProjet.getAttribute('data-abbreviation') : '';
+    }
+
+    // Fonction pour générer la codification
+    function generateCodification(sequenceNumber) {
+        const localisation = localisationMapping[localisationField.value.trim()] || localisationField.value.trim();
+        const projetCode = getProjetCode();
+        const bailleurCode = getBailleurCode();
+        const designation = designationField.options[designationField.selectedIndex].getAttribute('data-abbreviation') || designationField.value.trim();
+
+        // Utilise uniquement l'année actuelle
+        const dateActuel = new Date().getFullYear().toString();
+
+        // Création du code de codification
+        const parts = [
+            'BF', // Code pays
+            localisation,
+            projetCode,
+            bailleurCode,
+            designation,
+            dateActuel,
+            sequenceNumber.toString().padStart(3, '0')
+        ].filter(part => part !== '');
+
+        // Joindre les parties avec un slash
+        const codification = parts.join('/');
+        codificationField.value = codification;
+    }
+
+    async function fetchLatestSequenceNumber() {
+        try {
+            const response = await fetch('/api/latest-sequence-number');
+            const data = await response.json();
+            return data.sequenceNumber + 1;
+        } catch (error) {
+            console.error('Erreur lors de la récupération du numéro de séquence:', error);
+            return 1;
         }
-    
-        // Fonction pour récupérer le dernier numéro de séquence depuis le serveur
-        async function fetchLatestSequenceNumber() {
-            try {
-                const response = await fetch('/api/latest-sequence-number');
-                const data = await response.json();
-                return data.sequenceNumber + 1;
-            } catch (error) {
-                console.error('Erreur lors de la récupération du numéro de séquence:', error);
-                return 1; // Valeur par défaut en cas d'erreur
-            }
-        }
-    
-        async function updateCodification() {
-            const sequenceNumber = await fetchLatestSequenceNumber();
-            generateCodification(sequenceNumber);
-        }
-    
-        // Écouteurs d'événements pour mettre à jour la codification à chaque changement de champ
+    }
+
+    async function updateCodification() {
+        const sequenceNumber = await fetchLatestSequenceNumber();
+        generateCodification(sequenceNumber);
+    }
+
+    $(document).ready(function() {
+        // Initialisation de Select2 pour le champ Projet
+        $(document).ready(function() {
+    $('#projet').select2({
+        theme: "bootstrap-5",
+        placeholder: "-- Sélectionner un Projet --",
+        allowClear: true,
+        width: '100%',
+        minimumResultsForSearch: 1
+    });
+
+    $('#bailleur').select2({
+        theme: "bootstrap-5",
+        placeholder: "-- Sélectionner un Bailleur --",
+        allowClear: true,
+        width: '100%',
+        minimumResultsForSearch: 1
+    });
+});
+
+
+        // Mise à jour de la codification lors de la sélection
+        $('#bailleur, #projet').on('change', updateCodification);
+
         localisationField.addEventListener('input', updateCodification);
-        projetField.addEventListener('input', updateCodification);
-        bailleurField.addEventListener('input', updateCodification);
         designationField.addEventListener('change', updateCodification);
-        dateReceptionField.addEventListener('input', updateCodification);
-    
-        // Initialisation de la codification au chargement de la page
+
+        // Initialisation de la codification au chargement
         updateCodification();
     });
-    </script>
-    
+});
+
+</script>
+
 
 @endsection
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
@@ -474,4 +549,3 @@
     });
 
 </script>
-

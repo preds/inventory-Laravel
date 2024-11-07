@@ -70,7 +70,7 @@
                 <div class="container my-auto">
                     <div class="text-center my-auto copyright"><span>Copyright Educo Burkina</span></div>
                 </div>
-            </footer>
+            </footer>   
                 {{-- fin footer --}}
     </div>
         

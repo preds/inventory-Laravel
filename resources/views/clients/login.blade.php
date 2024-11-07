@@ -28,23 +28,30 @@
             transform: translateY(-50%);
             cursor: pointer;
         }
+        
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.753);
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px; /* Ajustez la largeur maximale */
+            margin: 0 auto; /* Centre le conteneur horizontalement */
+        }
     </style>
 </head>
 
-<body class="bg-gradient-primary" style="background: url('{{ asset('clientsAssets/img/educofont.jpg') }}') no-repeat center center; background-size: cover; background-color: rgb(78, 115, 223); border-color: rgb(17, 200, 123);">
+<body class="bg-gradient-primary" style="background: url('{{ asset('clientsAssets/img/b.jpg') }}') no-repeat center center; background-size: cover; background-color: rgb(78, 115, 223); border-color: rgb(17, 200, 123);">
     <div class="container">
         <div class="row justify-content-center" style="margin-top: 147px;">
-            <div class="col-md-9 col-lg-12 col-xl-10">
-                <div class="card shadow-lg o-hidden border-0 my-5">
+            <div class="col-md-8"> <!-- Ajustez la largeur de la colonne ici -->
+                <div class="card shadow-lg o-hidden border-0 my-5 login-container">
                     <div class="card-body p-0">
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-flex">
-                                <div class="flex-grow-1 bg-login-image" style="background: url('{{ asset('clientsAssets/img/dogs/educo.jpg') }}') no-repeat; box-shadow: 0px 0px 17px 9px rgb(11,203,99); border-style: none; border-color: rgb(10,195,118);"></div>
-                            </div>
-                            <div class="col-lg-6">
+                            <div>
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h4 class="text-dark mb-4"><span style="color: rgb(9, 179, 94);">Bienvenue !</span></h4>
+                                        <h2 class="text-dark mb-4"><span style="color: rgb(0, 126, 63);">GESTION DES INVENTAIRES EDUCO</span></h>
                                     </div>
                                     @if ($errors->any())
                                         <div class="alert alert-danger">
@@ -60,20 +67,19 @@
                                         <div class="mb-3">
                                             <input class="form-control form-control-user" type="text" id="username" aria-describedby="emailHelp" placeholder="Nom d'utilisateur" name="username" value="{{ old('username') }}">
                                         </div>
-                                   
+
                                         <div class="form-group position-relative">
-                                            
-                                            <input type="password" class="form-control form-control-user" id="password" placeholder="mot de passe"  name="password" required>
+                                            <input type="password" class="form-control form-control-user" id="password" placeholder="mot de passe" name="password" required>
                                             <span class="toggle-icon ml-2" onclick="togglePasswordVisibility('password')"><i class="fas fa-eye"></i></span>
                                         </div>
-                                        
+
                                         <div class="mb-3">
                                             <div class="custom-control custom-checkbox small">
                                                 {{-- <input type="checkbox" class="custom-control-input" id="remember" name="remember">
                                                 <label class="custom-control-label" for="remember">Remember Me</label> --}}
                                             </div>
                                         </div>
-                                        <button class="btn btn-primary d-block btn-user w-100" type="submit">Login</button>
+                                        <button class="btn d-block btn-user w-100" style="background-color: #076814; color:white;" type="submit">Login</button>
                                         <hr>
                                     </form>
                                     {{-- <div class="text-center"><a class="small" href="{{ route('password.request') }}">Forgot Password?</a></div>
@@ -102,9 +108,8 @@
     <script src="{{ asset('clientsAssets/js/Table-With-Search-search-table.js') }}"></script>
     <script src="{{ asset('clientsAssets/js/theme.js') }}"></script>
 
-    
     <script>
-         function togglePasswordVisibility(id) {
+        function togglePasswordVisibility(id) {
             var passwordField = document.getElementById(id);
             var icon = passwordField.nextElementSibling.querySelector('i');
             if (passwordField.type === "password") {

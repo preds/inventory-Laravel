@@ -253,20 +253,38 @@ public function updateUsersPhoto(Request $request, $id)
 
 // reinitialiser le mot de passe
 
-public function resetPassword($id)
-{
-    $user = User::findOrFail($id);
+//public function resetPassword($id)
+//{
+//    $user = User::findOrFail($id);
+//
+//    // Générer un nouveau mot de passe
+//    $newPassword = Str::random(10);
+//    $user->password = Hash::make($newPassword);
+//    $user->password_reset_required = true;
+//    $user->save();
+//
+//    // return redirect()->route('users.edit')->with('success', 'password reset succefully. New-Password: ' . $password);
+//    return redirect()->route('users.edit', ['id' => $userId])
+//        ->with('success', 'Le mot de passe a été réinitialisé avec succès.');    return response()->json(['success' => true, 'new_password' => $newPassword]);
+//}
+    public function resetPassword($id)
+    {
+        try {
+            $user = User::findOrFail($id);
 
-    // Générer un nouveau mot de passe
-    $newPassword = Str::random(10);
-    $user->password = Hash::make($newPassword);
-    $user->password_reset_required = true;
-    $user->save();
+            // Générer un nouveau mot de passe
+            $newPassword = Str::random(10);
+            $user->password = Hash::make($newPassword);
+            $user->password_reset_required = true;
+            $user->save();
 
-    // return redirect()->route('users.edit')->with('success', 'password reset succefully. New-Password: ' . $password);
-    return response()->json(['success' => true, 'new_password' => $newPassword]);
-}
+            // Retourner une réponse JSON
+            return response()->json(['success' => true, 'message' => 'Mot de passe réinitialisé avec succès.', 'new_password' => $newPassword]);
 
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Erreur lors de la réinitialisation du mot de passe.'], 500);
+        }
+    }
 }
 
 

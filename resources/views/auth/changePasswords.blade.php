@@ -34,7 +34,7 @@
     </style>
 </head>
 
-<body class="bg-gradient-primary" style="background: url('{{ asset('clientsAssets/img/educofont.jpg') }}') no-repeat center center; background-size: cover; background-color: rgb(78, 115, 223); border-color: rgb(17, 200, 123);">
+<body class="bg-gradient-primary" style="background: url('{{ asset('clientsAssets/img/a.jpg') }}') no-repeat center center; background-size: cover; background-color: rgb(78, 115, 223); border-color: rgb(17, 200, 123);">
     <div class="container">
         <div class="row justify-content-center" style="margin-top: 147px;">
             <div class="col-md-9 col-lg-12 col-xl-10">
@@ -47,7 +47,7 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h4 class="text-dark mb-4"><span style="color: rgb(9, 179, 94);">Change Password</span></h4>
+                                        <h4 class="text-dark mb-4"><span style="color: rgb(9, 179, 94);">Changer de mot de passe </span></h4>
                                     </div>
                                     @if ($errors->any())
                                         <div class="alert alert-danger">
@@ -72,9 +72,9 @@
                                             <input class="form-control form-control-user" type="password" id="confirm_password" placeholder="Confirm New Password" name="new_password_confirmation" required>
                                             <span class="toggle-icon" onclick="togglePasswordVisibility('confirm_password')"><i class="fas fa-eye"></i></span>
                                         </div>
-                                        <button class="btn btn-primary d-block btn-user w-100" type="submit">Change Password</button>
+                                        <button class="btn btn-primary d-block btn-user w-100" type="submit">valide</button>
                                     </form>
-                                    
+
                                 </div>
                             </div>
                         </div>

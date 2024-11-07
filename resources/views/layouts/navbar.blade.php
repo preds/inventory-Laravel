@@ -119,6 +119,18 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('bailleurs.showAddBailleurPage') ? 'active' : '' }}" href="{{ route('bailleurs.showAddBailleurPage') }}">
+                                    <i class="fas fa-tags"></i><span>Ajouter Bailleurs</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('projets.showAddProjetPage') ? 'active' : '' }}" href="{{ route('projets.showAddProjetPage') }}">
+                                    <i class="fas fa-tags"></i><span>Ajouter Projets</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('task.log') ? 'active' : '' }}" href="{{ route('task.log') }}">
                                     <i class="fas fa-clipboard-list"></i><span class="ml-2">Logs des Tâches</span>
                                 </a>

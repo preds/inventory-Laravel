@@ -8,7 +8,7 @@
                 <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
                     <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input id="search-input" class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
+                            <input id="search-input" class="bg-light form-control border-0 small" type="text" placeholder="Rechercher ...">
                             <button class="btn btn-primary py-0" type="button" style="background: rgb(2,100,51);border-color: rgb(2,100,51);">
                                 <i class="fas fa-search"></i>
                             </button>

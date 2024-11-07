@@ -70,7 +70,7 @@ Gestion des utilisateurs
                                 <div class="col">
                                     <div class="mb-3">
                                         <label class="form-label" for="first_name"><strong>Prénom</strong></label>
-                                        <input class="form-control @error('first_name') is-invalid @enderror" type="text" id="first_name" placeholder="Enter first name" name="first_name" value="{{ old('first_name') }}">
+                                        <input class="form-control @error('first_name') is-invalid @enderror" type="text" id="first_name" placeholder="Enter votre prénom" name="first_name" value="{{ old('first_name') }}">
                                         @error('first_name')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -79,7 +79,7 @@ Gestion des utilisateurs
                                 <div class="col">
                                     <div class="mb-3">
                                         <label class="form-label" for="last_name"><strong>Nom de famille</strong></label>
-                                        <input class="form-control @error('last_name') is-invalid @enderror" type="text" id="last_name" placeholder="Enter last name" name="last_name" value="{{ old('last_name') }}">
+                                        <input class="form-control @error('last_name') is-invalid @enderror" type="text" id="last_name" placeholder="Enter votre nom de Famille" name="last_name" value="{{ old('last_name') }}">
                                         @error('last_name')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -90,7 +90,7 @@ Gestion des utilisateurs
                                 <div class="col">
                                     <div class="mb-3">
                                         <label class="form-label" for="username"><strong>Nom d'utilisateur</strong></label>
-                                        <input class="form-control @error('username') is-invalid @enderror" type="text" id="username" placeholder="Enter username" name="username" value="{{ old('username') }}">
+                                        <input class="form-control @error('username') is-invalid @enderror" type="text" id="username" placeholder="Enter le nom d'utilisateur" name="username" value="{{ old('username') }}">
                                         @error('username')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
